@@ -1,0 +1,43 @@
+#cpu throttle
+stress --cpu 1 --timeout 300
+
+
+#memory throttle
+rm -f /tmp/stress-ng-*
+cd /tmp
+stress-ng --vm 1 --vm-bytes 60% --timeout 60s
+sudo stress-ng --vm 1 --vm-bytes 60% --vm-keep --vm-method write64 --timeout 60s
+
+
+#Disk throttle
+fallocate -l 1.5G /home/ssm-user/WebsiteMonitor/fillfile1
+rm -f /home/ssm-user/WebsiteMonitor/fillfile1
+
+/var/www/shopeasy/
+
+/var/www/cpuWebsite
+
+sudo nano /var/www/cpuWebsite/app.py
+sudo nano /etc/systemd/system/cpuWebsite.service
+sudo nano /etc/nginx/sites-available/cpuWebsite
+sudo ln -s /etc/nginx/sites-available/cpuWebsite /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+sudo systemctl daemon-reload
+sudo systemctl start cpuWebsite
+sudo systemctl enable cpuWebsite
+sudo systemctl status cpuWebsite
+
+sudo chown -R www-data:www-data /var/www/cpuWebsite
+sudo chmod -R 755 /var/www/cpuWebsite
+sudo mkdir -p /var/log/cpuWebsite
+sudo chown www-data:www-data /var/log/cpuWebsite
+sudo chmod 755 /var/log/cpuWebsite
+sudo systemctl daemon-reload
+sudo systemctl restart cpuWebsite
+sudo systemctl enable cpuWebsite
+
+
+sudo tail -f /var/www/cpuWebsite/logs/access.log
+
+sudo cat /var/www/cpuWebsite/app.py
