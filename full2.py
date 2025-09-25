@@ -313,10 +313,11 @@ print("🌐 Started Monitoring...")
 
 while True:
     try:
+
         # Step 1: Get EC2 status and CPU metrics
         state, system_status, instance_status = get_ec2_status(INSTANCE_ID)
         now_utc = datetime.now(timezone.utc)
-        one_hour_ago = now_utc - timedelta(hours=1)
+        one_hour_ago = now_utc - timedelta(minutes=15)
         
         cpu_per_minute = get_cpu_per_minute(INSTANCE_ID, start_time=one_hour_ago, end_time=now_utc)
         
@@ -324,7 +325,6 @@ while True:
         print(f"EC2 State: {state}")
         print(f"System Status: {system_status}")
         print(f"Instance Status: {instance_status}")
-
         print("\n--- CPU Utilization Per Minute (Last Hour) ---")
         if not cpu_per_minute:
             print("No CPU data found in the last hour.")
